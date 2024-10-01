@@ -1,0 +1,73 @@
+GET http://172.26.40.59:8111/authenticationTest.html?csrf
+Authorization: Basic admin admin
+Accept: application/json
+
+###
+POST http://172.26.40.59:8111/app/rest/projects
+Content-Type: application/json
+X-TC-CSRF-Token:199474f9-6c9a-4c1f-8d60-24896f2a5a5b
+Accept: application/json
+
+{
+  "parentProject": {
+    "locator": "_Root"
+  },
+  "name": "name",
+  "id": "id",
+  "copyAllAssociatedSettings": true
+}
+
+###
+POST http://172.26.40.59:8111/app/rest/buildTypes
+Content-Type: application/json
+X-TC-CSRF-Token:199474f9-6c9a-4c1f-8d60-24896f2a5a5b
+Accept: application/json
+
+{
+  "id": "id",
+  "name": "Print Hello World",
+  "project": {
+    "id": "id"
+  },
+  "steps": {
+    "step": [
+      {
+        "name": "Print Hello World",
+        "type": "simpleRunner",
+        "properties": {
+          "property": [
+            {
+              "name": "script.content",
+              "value": "echo 'Hello World!'"
+            },
+            {
+              "name": "teamcity.step.mode",
+              "value": "default"
+            },
+            {
+              "name": "use.custom.script",
+              "value": "true"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
+###
+POST http://172.26.40.59:8111/app/rest/buildQueue
+Content-Type: application/json
+X-TC-CSRF-Token:199474f9-6c9a-4c1f-8d60-24896f2a5a5b
+Accept: application/json
+
+{
+  "buildType": {
+    "id": "id"
+  }
+}
+###
+GET http://172.26.40.59:8111/app/rest/builds/id:102
+Content-Type: application/json
+X-TC-CSRF-Token:080eee09-12f9-45d9-941c-ce876964a472
+Accept: application/json
+###
