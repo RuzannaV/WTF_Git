@@ -1,0 +1,5 @@
+### GET build by buildTypeId
+GET http://admin:admin@172.26.40.59:8111/app/rest/projects/id:TestProject
+Accept: application/json
+
+###
