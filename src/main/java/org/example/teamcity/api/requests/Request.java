@@ -3,8 +3,6 @@ package org.example.teamcity.api.requests;
 import io.restassured.specification.RequestSpecification;
 import org.example.teamcity.api.enums.Endpoint;
 
-import javax.xml.stream.events.EndDocument;
-
 public class Request {
     /**
      * Request - это класс, описывающий меняющиеся параметры запроса, такие как:
