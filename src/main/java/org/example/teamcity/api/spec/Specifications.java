@@ -9,20 +9,9 @@ import org.example.teamcity.api.config.Config;
 import org.example.teamcity.api.models.User;
 
 public class Specifications {
-
     private static Specifications spec;
 
-    private Specifications() {
-    }
-
-    public static Specifications getSpec() {
-        if (spec == null) {
-            spec = new Specifications();
-        }
-        return spec;
-    }
-
-    private RequestSpecBuilder reqBuilder() {
+    private static RequestSpecBuilder reqBuilder() {
         var requestBuilder = new RequestSpecBuilder();
         requestBuilder.addFilter(new RequestLoggingFilter());
         requestBuilder.addFilter(new ResponseLoggingFilter());
@@ -31,14 +20,20 @@ public class Specifications {
         return requestBuilder;
     }
 
-    public RequestSpecification unauthSpec() {
+    public static RequestSpecification superUserSpec(){
+        var requestBuilder = reqBuilder();
+        requestBuilder.setBaseUri("http://%s:%s@%s/httpAuth".formatted("", Config.getProperty("superUserToken"), Config.getProperty("host")));
+                return requestBuilder.build();
+    }
+
+    public static RequestSpecification unauthSpec() {
         var requestBuilder = reqBuilder();
         return requestBuilder.build();
     }
 
-    public RequestSpecification authSpec(User user) {
+    public static RequestSpecification authSpec(User user) {
         var requestBuilder = reqBuilder();
-        requestBuilder.setBaseUri("http://" + user.getUsername() + ":" + user.getPassword() + "@" + Config.getProperty("host"));
+        requestBuilder.setBaseUri("http://%s:%s@%s/httpAuth".formatted(user.getUsername(), user.getPassword(), Config.getProperty("host")));
         return requestBuilder.build();
     }
 }
